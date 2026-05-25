@@ -1,26 +1,560 @@
 @import "tailwindcss";
 
+/* ─────────────────────────────────────────────
+   RAW CSS VARIABLES
+───────────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg:          #B8BF9C;
+  --panel:       #EDE8C2;
+  --panel-mid:   #D8D0A8;
+  --panel-dark:  #C4BA90;
+  --border:      #3D3025;
+  --orange:      #D4785A;
+  --orange-dark: #A85A40;
+  --teal:        #5A8880;
+  --teal-dark:   #3D6860;
+  --yellow:      #E8C462;
+  --yellow-dark: #C0A040;
+  --red:         #C45A4A;
+  --green:       #6AAA6A;
+  --text:        #3D3025;
+  --text-muted:  #7A6A55;
+  --paper:       #F5F0DC;
+  --shadow:      rgba(61, 48, 37, 0.45);
+  --cloud:       rgba(255, 255, 255, 0.55);
 }
 
+/* ─────────────────────────────────────────────
+   TAILWIND V4 THEME
+───────────────────────────────────────────── */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-game-bg:    #B8BF9C;
+  --color-panel:      #EDE8C2;
+  --color-border:     #3D3025;
+  --color-orange:     #D4785A;
+  --color-teal:       #5A8880;
+  --color-yellow:     #E8C462;
+  --color-game-text:  #3D3025;
+  --color-muted:      #7A6A55;
+  --color-paper:      #F5F0DC;
+
+  --font-pixel:      var(--font-pixel), "Courier New", monospace;
+  --font-body:       var(--font-vt323), "Courier New", monospace;
+  --font-mono:       var(--font-vt323), monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* ─────────────────────────────────────────────
+   BASE
+───────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-vt323), "Courier New", monospace;
+  font-size: 18px;
+  color: var(--text);
+  background-color: var(--bg);
+  min-height: 100vh;
+  position: relative;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: unset;
 }
+
+/* Cloudy sky background — fixed so it shows through all sections */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(ellipse 340px 200px at  8% 12%, rgba(255,255,255,0.58) 0%, transparent 65%),
+    radial-gradient(ellipse 240px 150px at 22% 18%, rgba(255,255,255,0.45) 0%, transparent 65%),
+    radial-gradient(ellipse 420px 260px at 68%  8%, rgba(255,255,255,0.52) 0%, transparent 65%),
+    radial-gradient(ellipse 280px 170px at 85% 20%, rgba(255,255,255,0.48) 0%, transparent 65%),
+    radial-gradient(ellipse 200px 130px at 45% 55%, rgba(255,255,255,0.42) 0%, transparent 65%),
+    radial-gradient(ellipse 360px 220px at 15% 75%, rgba(255,255,255,0.46) 0%, transparent 65%),
+    radial-gradient(ellipse 300px 180px at 80% 80%, rgba(255,255,255,0.44) 0%, transparent 65%);
+}
+
+/* All sections sit above the fixed background */
+section { position: relative; z-index: 1; }
+
+::selection {
+  background-color: var(--orange);
+  color: var(--paper);
+}
+
+::-webkit-scrollbar       { width: 6px; }
+::-webkit-scrollbar-track { background: var(--panel-mid); }
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 0;
+  image-rendering: pixelated;
+}
+
+/* ─────────────────────────────────────────────
+   PIXEL PANEL  (general parchment box)
+───────────────────────────────────────────── */
+.pixel-panel {
+  background: var(--panel);
+  border: 3px solid var(--border);
+  box-shadow: 4px 4px 0 0 var(--shadow);
+}
+
+.pixel-panel-dark {
+  background: var(--panel-mid);
+  border: 3px solid var(--border);
+  box-shadow: 4px 4px 0 0 var(--shadow);
+}
+
+/* ─────────────────────────────────────────────
+   SECTION HEADER  (>>-- TITLE --<<)
+───────────────────────────────────────────── */
+.game-section-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-family: var(--font-pixel), monospace;
+  font-size: 11px;
+  color: var(--text);
+  letter-spacing: 0.05em;
+}
+.game-section-title::before,
+.game-section-title::after {
+  content: "--";
+  color: var(--orange);
+  font-family: var(--font-pixel), monospace;
+}
+
+/* ─────────────────────────────────────────────
+   PIXEL BUTTONS
+───────────────────────────────────────────── */
+.pixel-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  font-family: var(--font-pixel), monospace;
+  font-size: 9px;
+  color: var(--paper);
+  background: var(--teal);
+  border: 3px solid var(--border);
+  box-shadow: 3px 3px 0 0 var(--border);
+  cursor: pointer;
+  transition: transform 80ms, box-shadow 80ms;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+}
+.pixel-btn:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 0 var(--border);
+}
+
+.pixel-btn-orange {
+  background: var(--orange);
+}
+.pixel-btn-yellow {
+  background: var(--yellow);
+  color: var(--text);
+}
+
+/* ─────────────────────────────────────────────
+   PIXEL BULLET LIST  (orange square bullets)
+───────────────────────────────────────────── */
+.pixel-list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-family: var(--font-vt323), monospace;
+  font-size: 20px;
+  color: var(--text);
+  line-height: 1.5;
+}
+.pixel-list-item::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  min-width: 10px;
+  background: var(--orange);
+  border: 2px solid var(--border);
+  margin-top: 6px;
+}
+
+/* ─────────────────────────────────────────────
+   SKILL BADGE  (PS / Ai / Figma style)
+───────────────────────────────────────────── */
+.skill-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+  border: 3px solid var(--border);
+  box-shadow: 3px 3px 0 0 var(--border);
+  font-family: var(--font-pixel), monospace;
+  font-size: 7px;
+  color: var(--paper);
+  text-align: center;
+  line-height: 1.3;
+  padding: 4px;
+}
+
+/* ─────────────────────────────────────────────
+   WORLD MAP CARD  (projects section)
+───────────────────────────────────────────── */
+.world-card {
+  position: relative;
+  border: 3px solid var(--border);
+  box-shadow: 5px 5px 0 0 var(--border);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 80ms, box-shadow 80ms;
+}
+.world-card:hover {
+  transform: translate(3px, 3px);
+  box-shadow: 2px 2px 0 0 var(--border);
+}
+.world-card-body {
+  padding: 24px 16px;
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.world-card-label {
+  background: var(--panel);
+  border-top: 3px solid var(--border);
+  padding: 8px 12px;
+  font-family: var(--font-pixel), monospace;
+  font-size: 8px;
+  color: var(--text);
+  text-align: center;
+  letter-spacing: 0.05em;
+}
+
+/* ─────────────────────────────────────────────
+   RPG STAT ROW  (character card)
+───────────────────────────────────────────── */
+.stat-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-vt323), monospace;
+  font-size: 20px;
+  padding: 4px 0;
+  border-bottom: 2px dashed var(--panel-dark);
+  color: var(--text);
+}
+.stat-row:last-child {
+  border-bottom: none;
+}
+.stat-label {
+  font-family: var(--font-pixel), monospace;
+  font-size: 8px;
+  color: var(--teal);
+  min-width: 80px;
+}
+
+/* ─────────────────────────────────────────────
+   AVATAR FRAME  (character portrait)
+───────────────────────────────────────────── */
+.avatar-frame {
+  background: #D0C890;
+  border: 3px solid var(--border);
+  box-shadow:
+    inset 3px 3px 0 0 rgba(255,255,255,0.3),
+    inset -3px -3px 0 0 rgba(0,0,0,0.15),
+    3px 3px 0 0 var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* ─────────────────────────────────────────────
+   BLINK ANIMATION  (press any key)
+───────────────────────────────────────────── */
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+.blink { animation: blink 1s step-end infinite; }
+
+/* ─────────────────────────────────────────────
+   PIXEL CURSOR / SELECTOR
+───────────────────────────────────────────── */
+@keyframes cursorBounce {
+  0%, 100% { transform: translateX(0); }
+  50%       { transform: translateX(4px); }
+}
+.pixel-cursor {
+  display: inline-block;
+  animation: cursorBounce 0.8s ease-in-out infinite;
+  color: var(--orange);
+  font-family: var(--font-pixel), monospace;
+  font-size: 10px;
+}
+
+/* ─────────────────────────────────────────────
+   PIXEL SCROLL ARROW (scroll indicator)
+───────────────────────────────────────────── */
+@keyframes pixelBounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(6px); }
+}
+.pixel-bounce { animation: pixelBounce 1.2s ease-in-out infinite; }
+
+/* ─────────────────────────────────────────────
+   SECTION DIVIDER (dotted border)
+───────────────────────────────────────────── */
+.pixel-divider {
+  border: none;
+  border-top: 3px dashed var(--panel-dark);
+  margin: 12px 0;
+}
+
+/* ─────────────────────────────────────────────
+   QUEST LOG ENTRY  (experience/education)
+───────────────────────────────────────────── */
+.quest-entry {
+  border-left: 4px solid var(--orange);
+  padding-left: 16px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+/* ─────────────────────────────────────────────
+   PIXEL TAG  (tech stack tags)
+───────────────────────────────────────────── */
+.pixel-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 8px;
+  font-family: var(--font-pixel), monospace;
+  font-size: 7px;
+  color: var(--text);
+  background: var(--panel-mid);
+  border: 2px solid var(--border);
+  letter-spacing: 0.05em;
+}
+
+/* ─────────────────────────────────────────────
+   NAV ITEM  (game menu style)
+───────────────────────────────────────────── */
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-pixel), monospace;
+  font-size: 8px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 120ms;
+  padding: 4px 0;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+}
+.nav-item:hover,
+.nav-item.active {
+  color: var(--text);
+}
+
+/* ─────────────────────────────────────────────
+   HERO GATE  (click-to-enter overlay)
+───────────────────────────────────────────── */
+@keyframes gate-crt-off {
+  0%   { opacity: 1; transform: scaleY(1);    filter: brightness(1); }
+  10%  { opacity: 1; transform: scaleY(1);    filter: brightness(3) contrast(2); }
+  25%  { opacity: 1; transform: scaleY(0.35) scaleX(1.08); filter: brightness(5); }
+  45%  { opacity: 1; transform: scaleY(0.04) scaleX(1.25); filter: brightness(8); }
+  65%  { opacity: 1; transform: scaleY(0.01) scaleX(1.5);  filter: brightness(12); }
+  100% { opacity: 0; transform: scaleY(0)    scaleX(2);    filter: brightness(16); }
+}
+.gate-overlay { transform-origin: center center; }
+.gate-exit    { animation: gate-crt-off 0.65s ease-in forwards; pointer-events: none; }
+
+@keyframes gate-float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-6px); }
+}
+.gate-float { animation: gate-float 2.2s ease-in-out infinite; }
+
+/* ─────────────────────────────────────────────
+   SCROLL REVEAL  (IntersectionObserver driven)
+───────────────────────────────────────────── */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+[data-reveal="left"]  { transform: translateX(-36px); }
+[data-reveal="right"] { transform: translateX(36px); }
+[data-reveal="scale"] { transform: scale(0.9) translateY(16px); }
+[data-reveal="flip"]  { transform: rotateX(-20deg) translateY(20px); transform-origin: top center; }
+[data-reveal].visible {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* ─────────────────────────────────────────────
+   INVENTORY ITEM SLOT  (skills section)
+───────────────────────────────────────────── */
+.inv-slot {
+  width: 52px; height: 52px;
+  border: 2px solid rgba(255,255,255,0.12);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-pixel), monospace;
+  font-size: 7px;
+  text-align: center;
+  padding: 3px;
+  cursor: default;
+  position: relative;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.inv-slot:hover {
+  border-color: rgba(255,255,255,0.5);
+  box-shadow: 0 0 10px rgba(255,255,255,0.12), inset 0 0 8px rgba(255,255,255,0.06);
+  z-index: 1;
+}
+
+/* ─────────────────────────────────────────────
+   END CREDITS  (contact section)
+───────────────────────────────────────────── */
+@keyframes credits-scroll {
+  from { transform: translateY(60px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+.credits-entry { animation: credits-scroll 0.8s cubic-bezier(0.16,1,0.3,1) both; }
+
+/* ─────────────────────────────────────────────
+   TAPE DIVIDER  (scrolling banner between sections)
+─────────────────────────────────────────────── */
+.tape-divider-wrap {
+  position: relative;
+  top: -1px;
+  z-index: 10; /* sits on top of sections — tape sticks across the seam */
+  width: 115%;
+  margin-left: -7.5%;
+  margin-top: -20px;
+  margin-bottom: -20px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.tape-divider-inner {
+  width: 100%;
+  padding: 14px 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+@keyframes tape-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.tape-track {
+  display: inline-block;
+  white-space: nowrap;
+  font-family: var(--font-pixel), monospace;
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  animation: tape-scroll 22s linear infinite;
+  padding-right: 0;
+}
+
+/* ─────────────────────────────────────────────
+   UTILITY ANIMATIONS
+───────────────────────────────────────────── */
+@keyframes pulse {
+  0%, 100% { opacity: 1;    transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(0.85); }
+}
+
+/* ─────────────────────────────────────────────
+   SECTION ENTRANCE TRANSITIONS
+   data-enter="[type]" + .s-enter class
+───────────────────────────────────────────── */
+@keyframes s-rise {
+  from { opacity: 0; transform: translateY(70px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes s-drop {
+  from { opacity: 0; transform: translateY(-50px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)     scale(1); }
+}
+@keyframes s-pop {
+  0%   { opacity: 0; transform: scale(0.88) translateY(40px); }
+  65%  { opacity: 1; transform: scale(1.03) translateY(-6px); }
+  100% { opacity: 1; transform: scale(1)    translateY(0); }
+}
+@keyframes s-slide {
+  from { opacity: 0; transform: translateX(70px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes s-tilt {
+  from { opacity: 0; transform: perspective(900px) rotateX(-12deg) translateY(50px); }
+  to   { opacity: 1; transform: perspective(900px) rotateX(0deg)   translateY(0); }
+}
+@keyframes s-glitch {
+  0%   { opacity: 0; transform: translateY(30px); filter: brightness(3) saturate(0); }
+  15%  { opacity: 1; transform: translateX(4px);  filter: brightness(2); }
+  30%  { opacity: 1; transform: translateX(-4px); filter: brightness(1.5); }
+  45%  { opacity: 1; transform: translateX(2px);  filter: brightness(1.2); }
+  100% { opacity: 1; transform: none;             filter: none; }
+}
+
+@keyframes coin-flip {
+  0%   { transform: scaleX(1);     background: #F0C030; }
+  24%  { transform: scaleX(0.08);  background: #B08020; }
+  26%  { transform: scaleX(-0.08); background: #B08020; }
+  50%  { transform: scaleX(-1);    background: #F0C030; }
+  74%  { transform: scaleX(-0.08); background: #B08020; }
+  76%  { transform: scaleX(0.08);  background: #B08020; }
+  100% { transform: scaleX(1);     background: #F0C030; }
+}
+@keyframes coin-hover {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-7px); }
+}
+@keyframes coin-slot-drop {
+  0%   { transform: translateY(0)    scaleX(1);   opacity: 1; }
+  55%  { transform: translateY(18px) scaleX(0.85); opacity: 0.9; }
+  100% { transform: translateY(34px) scaleX(0.1); opacity: 0; }
+}
+@keyframes fade-out {
+  0%, 65% { opacity: 1; }
+  100%    { opacity: 0; }
+}
+
+/* ─────────────────────────────────────────────
+   HERO TAPE  (first tape divider — hidden until gate entered)
+───────────────────────────────────────────── */
+.hero-tape {
+  opacity: 0;
+  transition: opacity 0.9s ease 0.25s;
+}
+body.hero-entered .hero-tape {
+  opacity: 1;
+}
+
+[data-enter] { opacity: 0; }
+
+[data-enter].s-enter {
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+[data-enter="rise"].s-enter   { animation-name: s-rise;   animation-duration: 0.75s; }
+[data-enter="drop"].s-enter   { animation-name: s-drop;   animation-duration: 0.70s; }
+[data-enter="pop"].s-enter    { animation-name: s-pop;    animation-duration: 0.80s; animation-timing-function: ease; }
+[data-enter="slide"].s-enter  { animation-name: s-slide;  animation-duration: 0.70s; }
+[data-enter="tilt"].s-enter   { animation-name: s-tilt;   animation-duration: 0.85s; }
+[data-enter="glitch"].s-enter { animation-name: s-glitch; animation-duration: 0.65s; animation-timing-function: steps(1); }
