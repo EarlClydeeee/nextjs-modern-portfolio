@@ -6,7 +6,7 @@ type Props = { id: PortfolioSectionId };
 
 const education = [
   {
-    degree: "BS Computer Engineering",
+    degree: "BS Computer Engineering — AI & ML",
     institution: "Polytechnic University of the Philippines",
     location: "Sta. Mesa, Manila",
     startYear: "2023", endYear: "2027",
@@ -20,9 +20,14 @@ const education = [
     location: "Tanza, Cavite",
     startYear: "2021", endYear: "2023",
     yearColor: "#D4C050",
-    note: "Graduated with High Honors · Batch Rank 8 · Grade 11 Highest Honor",
+    note: "Graduated with High Honors · Batch Rank 8 · Grade 11 Highest Honor (Rank 3)",
     icon: "📜",
   },
+];
+
+const certifications = [
+  { label: "AI Engineer Associate", issuer: "DataCamp", color: "#3878D0" },
+  { label: "Project Management Foundations", issuer: "Google", color: "#4A9A5A" },
 ];
 
 const skillStickers = [
@@ -31,14 +36,15 @@ const skillStickers = [
   { label: "UI / UX",        color: "#9A5AC0" },
   { label: "System Design",  color: "#4A80C0" },
   { label: "Team Lead",      color: "#4A9A5A" },
-  { label: "Data Systems",   color: "#C04A4A" },
+  { label: "ML & AI Prototype", color: "#C04A4A" },
+  { label: "Data Systems",   color: "#7A6A55" },
 ];
 
 const tools = [
   { label: "React",      icon: "⚛" },
   { label: "Next.js",    icon: "▲" },
   { label: "TypeScript", icon: "🔷" },
-  { label: "Supabase",   icon: "⚡" },
+  { label: "Python",     icon: "🐍" },
   { label: "AWS",        icon: "☁" },
   { label: "Figma",      icon: "🎨" },
 ];
@@ -52,46 +58,53 @@ const experiences = [
     status: "COMPLETED", accentBg: "#E0E0E0", accentBdr: "#404040", nameColor: "#333333",
   },
   {
+    period: "2025 — Present", title: "Software Engineer & Project Manager",
+    company: "ICpEP.SE — PUP Manila", location: "PUP Manila",
+    description: "Led planning and development of the Certificate Generation Tool. Engineered CSV parsing, dynamic placeholders, and batch PDF/PNG export using Next.js and Tailwind CSS.",
+    tags: ["Next.js", "TypeScript", "Figma", "DRY Workflow"],
+    status: "ACTIVE", accentBg: "#EED8FF", accentBdr: "#9A5AC0", nameColor: "#6A2A98",
+  },
+  {
     period: "2023 — Present", title: "Development Team",
     company: "AWS Cloud Club — PUP Manila", location: "PUP Manila",
-    description: "Shipped the gamified Skill Builder LMS (deployed across 7 departments), the official AWSCC PUP website, and the TEDxPUP event platform. Led development on multiple simultaneous production deployments.",
-    tags: ["React", "Astro", "Express.js", "Supabase", "AWS"],
+    description: "Spearheaded design and development of a gamified LMS across 7 technical departments. Following professional Git workflows and Conventional Commits.",
+    tags: ["React", "Express.js", "Supabase", "Git"],
     status: "ACTIVE", accentBg: "#FFF4D0", accentBdr: "#D4A040", nameColor: "#A07820",
   },
   {
     period: "2025 — Present", title: "Software Development Co-Lead",
     company: "PUP Microsoft Student Community", location: "PUP Manila",
-    description: "Architected frontend systems with modular component design and scalability-first principles. Co-leads the software development vertical for one of PUP Manila's largest tech communities.",
-    tags: ["Next.js", "React", "TypeScript", "Git"],
+    description: "Mentors developers in modern workflows and frontend-backend integration. Leads hands-on sessions on UI architecture, modular design, and project scalability.",
+    tags: ["Next.js", "UI Architecture", "Mentorship", "Git"],
     status: "ACTIVE", accentBg: "#D8FFE8", accentBdr: "#4A9A5A", nameColor: "#2A7038",
   },
   {
-    period: "2025 — Present", title: "Software Engineer & Project Manager",
-    company: "ICpEP.SE — PUP Manila", location: "PUP Manila",
-    description: "Engineered and project-managed the Certificate Generation Tool — automating bulk certificate creation for large-scale events and eliminating days of manual design work.",
-    tags: ["Next.js", "TypeScript", "Figma", "PDF Export"],
-    status: "ACTIVE", accentBg: "#EED8FF", accentBdr: "#9A5AC0", nameColor: "#6A2A98",
+    period: "2025 — Present", title: "Data and Machine Learning Cadet",
+    company: "GDG on Campus — PUP Manila", location: "PUP Manila",
+    description: "Collaborates on data-driven applications and AI prototypes. Gaining hands-on experience in data preprocessing, visualization, and ML model experimentation.",
+    tags: ["Python", "TensorFlow", "AI Literacy", "Preprocessing"],
+    status: "ACTIVE", accentBg: "#D8E4FF", accentBdr: "#4A80C0", nameColor: "#2A5090",
   },
   {
     period: "2023 — Present", title: "Lead Senior Software Developer",
     company: "ACCESS — PUP", location: "PUP Manila",
-    description: "Lead developer for the ACCESS organizational platform — centralized member directory, asset management, and governance workflows — plus the CPE Fair real-time tournament system.",
-    tags: ["Next.js", "Supabase", "PostgreSQL", "TypeScript"],
+    description: "Co-developing the CPE Fair Management Platform. Building modules for organizational transparency, streamlined announcements, and real-time tournament features.",
+    tags: ["Full-stack", "Next.js", "Supabase", "Tournament System"],
     status: "ACTIVE", accentBg: "#D8F0F0", accentBdr: "#5A8888", nameColor: "#2A6068",
   },
   {
     period: "2025", title: "Software Engineering Front-End Lead",
     company: "Hayakawa Electronics Philippines", location: "Philippines",
-    description: "Led frontend development for an industrial output monitoring system tracking 2M+ factory production cycles. Replaced manual reporting with an automated ETL dashboard — 45% efficiency gain.",
-    tags: ["HTML", "Tailwind", "JavaScript", "PHP", "MySQL"],
+    description: "Developed Output Monitoring System (OMS) tracking 2M+ production cycles. Streamlined reporting efficiency by 45% using ETL and modular UI components.",
+    tags: ["HTML", "Tailwind", "JavaScript", "PHP", "ETL"],
     status: "COMPLETED", accentBg: "#FFE0D4", accentBdr: "#E87858", nameColor: "#C04820",
   },
   {
     period: "2025", title: "Tech Committee Developer",
     company: "AWS User Group Philippines", location: "Philippines",
-    description: "Built the AWS Community Day Philippines website and proposed the NFC-based attendance verification system — automated real-time ID checking designed to replace manual registration queues.",
-    tags: ["React", "TypeScript", "Next.js", "NFC"],
-    status: "COMPLETED", accentBg: "#D8E4FF", accentBdr: "#4A80C0", nameColor: "#2A5090",
+    description: "Conceptualized official event site for AWS Community Day. Proposed the AWSUG NFC ID System for real-time attendee verification and analytics.",
+    tags: ["React", "TypeScript", "NFC", "Analytics"],
+    status: "COMPLETED", accentBg: "#F0F0F0", accentBdr: "#606060", nameColor: "#404040",
   },
 ];
 
@@ -247,6 +260,31 @@ export function WorkExperienceSection({ id }: Props) {
                         <div style={{ fontFamily:"var(--font-vt323),monospace", fontSize:"clamp(14px,2.5vw,15px)", color:"rgba(90,58,26,0.5)", marginTop:"4px", lineHeight:1.5 }}>
                           {item.note}
                         </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Divider */}
+                <div style={{ borderTop:"1px dashed rgba(90,58,26,0.25)", marginBottom:"18px" }} />
+
+                {/* CERTIFICATIONS */}
+                <StickerLabel label="CERTIFICATIONS" bg="#C05090" textColor="#F5F0E0" rotate="-0.4deg" />
+                <div className="flex flex-col gap-3" style={{ marginBottom: "20px" }}>
+                  {certifications.map((cert, i) => (
+                    <div
+                      key={cert.label}
+                      data-reveal="left"
+                      style={{ transitionDelay: `${i * 60}ms`, display: "flex", alignItems: "center", gap: "10px" }}
+                    >
+                      <div style={{ width: "4px", height: "4px", background: cert.color, borderRadius: "50%" }} />
+                      <div style={{ display: "flex", flexDirection: "column" }}>
+                        <span style={{ fontFamily: "var(--font-pixel),monospace", fontSize: "6px", color: "#3D3025", letterSpacing: "0.04em" }}>
+                          {cert.label}
+                        </span>
+                        <span style={{ fontFamily: "var(--font-vt323),monospace", fontSize: "14px", color: "rgba(90,58,26,0.5)" }}>
+                          {cert.issuer}
+                        </span>
                       </div>
                     </div>
                   ))}
